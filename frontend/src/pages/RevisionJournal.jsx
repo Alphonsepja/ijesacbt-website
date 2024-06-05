@@ -3,6 +3,8 @@ import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import "../style/revisionjournal.css";
+const baseURL = process.env.REACT_APP_API_BASE_URL;
+
 const RevisionJournal = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [message, setMessage] = useState('');
@@ -33,7 +35,7 @@ const RevisionJournal = () => {
     };
 
     const response = await axios.post(
-      `http://127.0.0.1:5000/api/v1/author/submit-update-journal`,updatedFormData,
+      `${baseURL}/api/v1/author/submit-update-journal`,updatedFormData,
       { headers }
     );
     //console.log(response);

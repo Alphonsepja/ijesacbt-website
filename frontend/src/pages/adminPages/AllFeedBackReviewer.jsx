@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 import ReviewCard from "../../component/ReviewCard";
 import FeedBAckCardAdmin from "../../component/FeedBAckCardAdmin";
 
+const baseURL = process.env.REACT_APP_API_BASE_URL;
 
 const AllFeedBackReviewer = () => {
     const [data, setData] = useState(null);
@@ -19,7 +20,7 @@ const AllFeedBackReviewer = () => {
       };
 
       const response = await axios.get(
-        "http://127.0.0.1:5000/api/v1/admin/getAllFeedBackOfReviwer",
+        `${baseURL}/api/v1/admin/getAllFeedBackOfReviwer`,
         { headers,params:{id,email} }
       );
       //console.log(response);

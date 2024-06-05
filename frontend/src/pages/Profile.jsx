@@ -5,6 +5,8 @@ import Circle from "../component/Circle";
 import axios from "axios";
 import toast from "react-hot-toast";
 
+const baseURL = process.env.REACT_APP_API_BASE_URL;
+
 const Profile = () => {
   const [userData, setUserData] = useState({});
   const [isReadOnly, setReadOnly] = useState(true);
@@ -16,7 +18,7 @@ const Profile = () => {
       };
       console.log("pppp");
       const { data } = await toast.promise(
-        axios.get("http://127.0.0.1:5000/api/v1/author/getUserProfile", {
+        axios.get(`${baseURL}/api/v1/author/getUserProfile`, {
           headers,
         }),
         {

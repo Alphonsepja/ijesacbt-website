@@ -6,6 +6,8 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
+const baseURL = process.env.REACT_APP_API_BASE_URL;
+
 const Signup = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -47,7 +49,7 @@ const Signup = () => {
     try {
       const { data } = await toast.promise(
         axios.post(
-          "http://localhost:5000/api/v1/author/register",
+          `${baseURL}/api/v1/author/register`,
           formDataObj,
           {
             headers: {

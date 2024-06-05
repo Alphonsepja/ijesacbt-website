@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '../style/journalsubmisionform.css';
 import toast from "react-hot-toast";
 import axios from 'axios';
-
+const baseURL = process.env.REACT_APP_API_BASE_URL;
 const JournalSubmitForm = () => {
   const [formData, setFormData] = useState({
     title: '',
@@ -42,7 +42,7 @@ const JournalSubmitForm = () => {
      
     
       const { data } = await toast.promise(
-        axios.post('http://localhost:5000/api/v1/author/submit-journal', formDataObj, {
+        axios.post(`${baseURL}/api/v1/author/submit-journal`, formDataObj, {
         headers: {
           'Content-Type': 'multipart/form-data',
            Authorization: localStorage.getItem('token'),

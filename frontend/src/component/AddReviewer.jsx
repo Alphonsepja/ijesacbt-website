@@ -5,6 +5,8 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import toast from 'react-hot-toast';
 
+const baseURL = process.env.REACT_APP_API_BASE_URL;
+
 const ReviewerCard = ({ title, author, status, date }) => {
   const [reviewers, setReviewers] = useState([]);
   const [newReviewer, setNewReviewer] = useState({});
@@ -23,7 +25,7 @@ const ReviewerCard = ({ title, author, status, date }) => {
         'Content-Type': 'application/json',
       };
 
-      const response = await axios.get(`http://127.0.0.1:5000/api/v1/admin/getJournal/${id}`, { headers });
+      const response = await axios.get(`${baseURL}/api/v1/admin/getJournal/${id}`, { headers });
 
       if (response.status === 200) {
         // Assuming the response.data contains the array of journals
@@ -46,7 +48,7 @@ const ReviewerCard = ({ title, author, status, date }) => {
         'Content-Type': 'application/json',
       };
 
-       const response = await axios.post(`http://127.0.0.1:5000/api/v1/admin/setReviwer/${id}`,reviewers, { headers });
+       const response = await axios.post(`${baseURL}/api/v1/admin/setReviwer/${id}`,reviewers, { headers });
 
       if (response.status === 200) {
         // Assuming the response.data contains the array of journals
@@ -109,7 +111,7 @@ const ReviewerCard = ({ title, author, status, date }) => {
         Authorization: localStorage.getItem('token'),
         'Content-Type': 'application/json',
       };
-      const data = await axios.get('http://localhost:5000/api/v1/admin/getAllReviewer', {
+      const data = await axios.get(`${baseURL}/api/v1/admin/getAllReviewer`, {
         headers,
       });
       setAllReviewers(data.data.data);
@@ -136,7 +138,7 @@ const ReviewerCard = ({ title, author, status, date }) => {
   
       const reviewerDetails = await Promise.all(
         uniqueReviewerIds.map(async (reviewerId) => {
-          const response = await axios.get(`http://127.0.0.1:5000/api/v1/admin/user_details/${reviewerId}`, { headers });
+          const response = await axios.get(`${baseURL}/api/v1/admin/user_details/${reviewerId}`, { headers });
           // console.log(response.data.data.data);
           return response.data.data.data; // Assuming the data contains reviewer details
         })

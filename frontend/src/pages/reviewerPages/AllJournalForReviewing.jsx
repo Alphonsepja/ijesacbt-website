@@ -3,6 +3,8 @@ import JournalCard from '../../component/JournalCard.jsx';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
+const baseURL = process.env.REACT_APP_API_BASE_URL;
+
 const AllJournalForReviewing = () => {
   const [journals, setJournals] = useState([]);
 
@@ -13,7 +15,7 @@ const AllJournalForReviewing = () => {
         'Content-Type': 'application/json',
       };
 
-      const response = await axios.get('http://127.0.0.1:5000/api/v1/reviewer/getReviewerJournal', { headers });
+      const response = await axios.get(`${baseURL}/api/v1/reviewer/getReviewerJournal`, { headers });
 
       if (response.status === 200) {
         // Assuming the response.data contains the array of journals

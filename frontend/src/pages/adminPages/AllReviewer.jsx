@@ -3,6 +3,7 @@ import axios from 'axios';
 import "../../style/allreviewers.css";
 import { Link } from 'react-router-dom';
 
+const baseURL = process.env.REACT_APP_API_BASE_URL;
 
 const AllReviewer = () => {
     const [reviewers,setReviewer]= useState([]);
@@ -12,7 +13,7 @@ const AllReviewer = () => {
                 Authorization: localStorage.getItem("token"),
                 "Content-Type": "application/json",
               };
-           const data = await axios.get("http://localhost:5000/api/v1/admin/getAllReviewer", {
+           const data = await axios.get(`${baseURL}/api/v1/admin/getAllReviewer`, {
             headers,
           });
           console.log(data.data.data);

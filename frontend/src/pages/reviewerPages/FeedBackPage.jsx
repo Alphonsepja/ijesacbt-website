@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import "../../style/feedbackPage.css"
 import { useParams } from 'react-router-dom';
 
+const baseURL = process.env.REACT_APP_API_BASE_URL;
+
 const FeedBackPage = () => {
     const navigate = useNavigate();
     let [formData,setFormData] = useState(new FormData());
@@ -30,7 +32,7 @@ const FeedBackPage = () => {
             'Content-Type': 'application/json',
           };
     
-          const response = await axios.post('http://127.0.0.1:5000/api/v1/reviewer/feedback', formData,{ headers });
+          const response = await axios.post(`${baseURL}/api/v1/reviewer/feedback`, formData,{ headers });
         // console.log(response);
           if (response.status === 200) {
             toast.success('Feedback submitted Successfully');

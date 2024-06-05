@@ -3,6 +3,7 @@ import './Login.css';
 import toast from "react-hot-toast";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+const baseURL = process.env.REACT_APP_API_BASE_URL;
 
 const Login = () => {
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ const Login = () => {
      
     
         const { data } = await toast.promise(
-          axios.post('http://localhost:5000/api/v1/author/login', formData),
+          axios.post(`${baseURL}/api/v1/author/login`, formData),
           {
             pending: "Login in progress...",
             success: "User Login successfully",

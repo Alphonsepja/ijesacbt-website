@@ -5,6 +5,9 @@ import axios from "axios";
 import { Link } from 'react-router-dom';
 import toast from "react-hot-toast";
 
+
+const baseURL = process.env.REACT_APP_API_BASE_URL;
+
 const ArchiveAdd = () => {
     const [volume, setVolume] = useState("");
     const [issue, setIssue] = useState("");
@@ -65,7 +68,7 @@ const ArchiveAdd = () => {
             };
 
             const response = await axios.get(
-                "http://127.0.0.1:5000/api/v1/admin/getAllVolume",
+                `${baseURL}/api/v1/admin/getAllVolume`,
                 { headers }
             );
 
@@ -110,7 +113,7 @@ const ArchiveAdd = () => {
             };
 
             const response = await axios.get(
-                "http://127.0.0.1:5000/api/v1/admin/addVolume",
+                `${baseURL}/api/v1/admin/addVolume`,
                 { headers }
             );
 
@@ -139,7 +142,7 @@ const ArchiveAdd = () => {
             };
 
             const response = await axios.put(
-                `http://127.0.0.1:5000/api/v1/admin/addIssue/${volume}`, {},
+                `${baseURL}/api/v1/admin/addIssue/${volume}`, {},
                 { headers }
             );
 
@@ -175,7 +178,7 @@ const ArchiveAdd = () => {
 
 
             const { data } = await toast.promise(
-                axios.post('http://localhost:5000/api/v1/admin/submit-Archive', updatedFormData, {
+                axios.post(`${baseURL}/api/v1/admin/submit-Archive`, updatedFormData, {
                     headers: {
                         'Content-Type': 'multipart/form-data',
                         Authorization: localStorage.getItem('token'),

@@ -5,12 +5,14 @@ import IssueCard from '../component/IssueCard';
 import { useParams } from "react-router-dom";
 import '../style/volumecard.css';
 
+const baseURL = process.env.REACT_APP_API_BASE_URL;
+
 const ArchiveIssue = () => {
      const [issueData,setIssueData] = useState([]);
      let {vol} = useParams();
     const fetchIssue = async()=>{
         try {
-            const response = await axios.get(`http://127.0.0.1:5000/api/v1/public/get-issue-data/${vol}`);
+            const response = await axios.get(`${baseURL}/api/v1/public/get-issue-data/${vol}`);
         // console.log(response);
           if (response.status === 200) {
             //console.log(response.data.data);

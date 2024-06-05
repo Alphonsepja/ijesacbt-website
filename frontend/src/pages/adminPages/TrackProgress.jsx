@@ -4,6 +4,8 @@ import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
 import "../../style/allreviewers.css"
 
+const baseURL = process.env.REACT_APP_API_BASE_URL;
+
 const TrackProgress = () => {
     const [journals, setJournals] = useState([]);
 
@@ -14,7 +16,7 @@ const TrackProgress = () => {
                 'Content-Type': 'application/json',
             };
 
-            const response = await axios.get('http://127.0.0.1:5000/api/v1/admin/getAllJournals', { headers });
+            const response = await axios.get(`${baseURL}/api/v1/admin/getAllJournals`, { headers });
             console.log(response.data.data)
 
             if (response.status === 200) {
@@ -55,7 +57,7 @@ const TrackProgress = () => {
                 'Content-Type': 'application/json',
             };
 
-            const response = await axios.post(`http://127.0.0.1:5000/api/v1/admin/acceptPaper/${paperId}`, {}, { headers });
+            const response = await axios.post(`${baseURL}/api/v1/admin/acceptPaper/${paperId}`, {}, { headers });
 
             if (response.status === 200) {
                 toast.success('Request Accepted Successfully');
@@ -84,7 +86,7 @@ const TrackProgress = () => {
                 'Content-Type': 'application/json',
             };
 
-            const response = await axios.post(`http://127.0.0.1:5000/api/v1/admin/rejectPaper/${paperId}`, {}, { headers });
+            const response = await axios.post(`${baseURL}/api/v1/admin/rejectPaper/${paperId}`, {}, { headers });
 
             if (response.status === 200) {
                 toast.success('Rejected Successfully');

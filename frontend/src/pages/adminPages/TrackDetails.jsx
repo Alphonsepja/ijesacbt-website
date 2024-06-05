@@ -6,6 +6,8 @@ import toast from "react-hot-toast";
 import '../../style/reviewerrequest.css';
 import { Link } from "react-router-dom";
 
+const baseURL = process.env.REACT_APP_API_BASE_URL;
+
 const TrackDetails = () => {
     const [data, setData] = useState(null);
   
@@ -19,7 +21,7 @@ const TrackDetails = () => {
             };
 
             const response = await axios.get(
-                `http://127.0.0.1:5000/api/v1/admin/track_details/${id}`,
+                `${baseURL}/api/v1/admin/track_details/${id}`,
                 { headers }
             );
             console.log(response);
@@ -45,7 +47,7 @@ const TrackDetails = () => {
               };
 
             const response = await axios.post(
-                `http://127.0.0.1:5000/api/v1/admin/send-mremind-mail`,{email:email,id:id,name:name},
+                `${baseURL}/api/v1/admin/send-mremind-mail`,{email:email,id:id,name:name},
                 { headers }
             );
             if (response.status === 200) {

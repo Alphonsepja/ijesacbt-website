@@ -3,6 +3,8 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 import "../../style/allreviewers.css"
 
+const baseURL = process.env.REACT_APP_API_BASE_URL;
+
 const PaperInReview =() =>{
     const [journals, setJournals] = useState([]);
 
@@ -13,7 +15,7 @@ const PaperInReview =() =>{
           'Content-Type': 'application/json',
         };
   
-        const response = await axios.get('http://127.0.0.1:5000/api/v1/admin/getAllJournals', { headers });
+        const response = await axios.get(`${baseURL}/api/v1/admin/getAllJournals`, { headers });
   
         if (response.status === 200) {
           // Assuming the response.data contains the array of journals

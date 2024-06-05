@@ -4,6 +4,7 @@ import toast from 'react-hot-toast';
 import { Link, useParams } from "react-router-dom";
 import "../style/volumecard.css";
 
+const baseURL = process.env.REACT_APP_API_BASE_URL;
 
 const ArchivePaper = () => {
   const [paperData, setPaperData] = useState([]);
@@ -17,7 +18,7 @@ const ArchivePaper = () => {
         vol: vol,
         issu: issu
       };
-      const response = await axios.get('http://127.0.0.1:5000/api/v1/public/get-archive-paper', { params });
+      const response = await axios.get(`${baseURL}/api/v1/public/get-archive-paper`, { params });
       // console.log(response);
       if (response.status === 200) {
         console.log(response.data.data);

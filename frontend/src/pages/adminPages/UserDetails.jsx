@@ -5,6 +5,8 @@ import { useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import '../../style/reviewerrequest.css';
 
+const baseURL = process.env.REACT_APP_API_BASE_URL;
+
 const UserDetails = () => {
     const [userData, setData] = useState(null);
     let { id } = useParams();
@@ -17,7 +19,7 @@ const UserDetails = () => {
             };
 
             const response = await axios.get(
-                `http://127.0.0.1:5000/api/v1/admin/user_details/${id}`,
+                `${baseURL}/api/v1/admin/user_details/${id}`,
                 { headers }
             );
             console.log(response);

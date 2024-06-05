@@ -4,11 +4,13 @@ import toast from 'react-hot-toast';
 import VolumeCard from '../component/VolumeCard';
 import '../style/volumecard.css';
 
+const baseURL = process.env.REACT_APP_API_BASE_URL;
+
 const ArchiveVolume = () => {
      const [volumeData,setVolumeData] = useState([]);
     const fetchVolume = async()=>{
         try {
-            const response = await axios.get('http://127.0.0.1:5000/api/v1/public/get-archive-data');
+            const response = await axios.get(`${baseURL}/api/v1/public/get-archive-data`);
         // console.log(response);
           if (response.status === 200) {
             //console.log(response.data.data);

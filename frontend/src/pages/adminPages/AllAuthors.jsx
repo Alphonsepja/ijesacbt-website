@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import "../../style/allreviewers.css";
 
+const baseURL = process.env.REACT_APP_API_BASE_URL;
+
 const AllAuthors =() =>{
     const [authors,setAuthor]= useState([]);
     const getAllAuthor = async()=>{
@@ -11,7 +13,7 @@ const AllAuthors =() =>{
                 Authorization: localStorage.getItem("token"),
                 "Content-Type": "application/json",
               };
-           const data = await axios.get("http://localhost:5000/api/v1/admin/getAllAuthor", {
+           const data = await axios.get(`${baseURL}/api/v1/admin/getAllAuthor`, {
             headers,
           });
           console.log(data.data.data);

@@ -4,7 +4,7 @@ import '../../style/allreviewers.css';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
-
+const baseURL = process.env.REACT_APP_API_BASE_URL;
 
 const ReviewerRequest = () => {
   
@@ -18,7 +18,7 @@ const ReviewerRequest = () => {
           'Content-Type': 'application/json',
         };
   
-        const response = await axios.get('http://127.0.0.1:5000/api/v1/admin/getReviewerRequest', { headers });
+        const response = await axios.get(`${baseURL}/api/v1/admin/getReviewerRequest`, { headers });
   
         if (response.status === 200) {
           // Assuming the response.data contains the array of journals
@@ -44,7 +44,7 @@ const ReviewerRequest = () => {
           'Content-Type': 'application/json',
         };
   
-        const response = await axios.delete(`http://127.0.0.1:5000/api/v1/admin/acceptRequest/${id}`, { headers });
+        const response = await axios.delete(`${baseURL}/api/v1/admin/acceptRequest/${id}`, { headers });
   
         if (response.status === 200) {
             fetchAllData();
@@ -68,7 +68,7 @@ const ReviewerRequest = () => {
           'Content-Type': 'application/json',
         };
   
-        const response = await axios.delete(`http://127.0.0.1:5000/api/v1/admin/acceptRequest/${id}`, { headers });
+        const response = await axios.delete(`${baseURL}/api/v1/admin/acceptRequest/${id}`, { headers });
   
         if (response.status === 200) {
          fetchAllData();

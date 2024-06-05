@@ -6,6 +6,8 @@ import { jwtDecode } from "jwt-decode";
 import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
 
+const baseURL = process.env.REACT_APP_API_BASE_URL;
+
 const FeedBackOnJournal = () => {
     const [journal, setJournal] = useState({});
     const [user, setUser] = useState(
@@ -24,7 +26,7 @@ const FeedBackOnJournal = () => {
                 'Content-Type': 'application/json',
             };
 
-            const response = await axios.get(`http://127.0.0.1:5000/api/v1/reviewer/getReviewJournal/${id}`, { headers });
+            const response = await axios.get(`${baseURL}/api/v1/reviewer/getReviewJournal/${id}`, { headers });
 
             if (response.status === 200) {
                 setJournal(response.data.data);
@@ -52,7 +54,7 @@ const FeedBackOnJournal = () => {
                 'Content-Type': 'application/json',
             };
 
-            const response = await axios.post(`http://127.0.0.1:5000/api/v1/reviewer/accept`, {userId:user._id,journalId:id},{ headers });
+            const response = await axios.post(`${baseURL}/api/v1/reviewer/accept`, {userId:user._id,journalId:id},{ headers });
 
             if (response.status === 200) {
                 setChange(true);
@@ -75,7 +77,7 @@ const FeedBackOnJournal = () => {
                 'Content-Type': 'application/json',
             };
 
-            const response = await axios.post(`http://127.0.0.1:5000/api/v1/reviewer/reject`, {userId:user._id,journalId:id},{ headers });
+            const response = await axios.post(`${baseURL}/api/v1/reviewer/reject`, {userId:user._id,journalId:id},{ headers });
 
             if (response.status === 200) {
                 setChange(true);
