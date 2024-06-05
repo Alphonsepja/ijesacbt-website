@@ -60,7 +60,12 @@ const registerUser =asyncHandler(async(req,res)=>{
         }
         //console.log(req.files);
         //step 4:
-        const degreeLocalPath =req.file?.path;
+        
+        if (!req.file) {
+            throw new ApiError(400, "Image file is required");
+        }
+
+        const degreeLocalPath =req.file.buffer;
         //console.log(degreeLocalPath);
         
         if(!degreeLocalPath)
@@ -181,7 +186,7 @@ const loginUser =asyncHandler(async(req,res)=>{
 //upload journal of author
 const uplaodJournal = asyncHandler(async(req,res)=>{
        try {
-        // console.log(req.file.path);
+        console.log("req file top : ",req.file);
         const {title,keyword, coAuthor1name, coAuthor1email, coAuthor2name, coAuthor2email, coAuthor3name, coAuthor3email,abstract,journalType} = req.body;
         //    console.log(req.body);
            const user = req.user;
@@ -210,8 +215,10 @@ const uplaodJournal = asyncHandler(async(req,res)=>{
             throw new ApiError(400,"Not Valid Co-Author");
            }
         }
-
-           const localJournalPath = req.file?.path;
+        if (!req.file) {
+            throw new ApiError(400, "Image file is required");
+        }
+           const localJournalPath = req.file.buffer;
            //console.log("localJournalPath",localJournalPath);
            if(!localJournalPath){
               throw new ApiError(400,"Journal  is required");
@@ -461,8 +468,11 @@ const uplaodUpdateJournal = asyncHandler(async(req,res)=>{
             return res.status(201).json(
                 "Feedback is not present ");
            }
-
-           const localJournalPath = req.file?.path;
+           console.log("req: ",req.file)
+           if (!req.file) {
+            throw new ApiError(400, "Image file is required");
+            }
+           const localJournalPath = req.file.buffer;
            console.log("localJournalPath",localJournalPath);
            if(!localJournalPath){
               throw new ApiError(400,"Journal  is required");

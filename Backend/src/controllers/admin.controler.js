@@ -477,7 +477,10 @@ const addArchive = asyncHandler(async(req,res)=>{
            if (isNaN(vol) || isNaN(issu)) {
             throw new ApiError(400, "Invalid volume or issue number");
         }
-         const localJournalPath = req.file?.path;
+        if (!req.file) {
+            throw new ApiError(400, "Image file is required");
+        }
+         const localJournalPath = req.file.buffer;
          console.log("localJournalPath",localJournalPath);
            if(!localJournalPath){
               throw new ApiError(400,"Journal  is required");

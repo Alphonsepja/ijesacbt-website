@@ -16,19 +16,16 @@ const JournalSubmitForm = () => {
     coAuthor3name:"",
     coAuthor3email:"",
     abstract: "",
-    pdfFile: 'null',
+    pdfFile: null,
     journalType: 'none',
   });
 
   const handleChange = (e) => {
-    const { id, value, type, files,name } = e.target;
-    //console.log(name+" "+ value);
-    
+    const { name, value, type, files } = e.target;
     setFormData((prevData) => ({
       ...prevData,
       [name]: type === 'file' ? files[0] : value,
     }));
-    
   };
 
   
@@ -36,15 +33,16 @@ const JournalSubmitForm = () => {
     e.preventDefault();
     const formDataObj = new FormData();
     Object.entries(formData).forEach(([key, value]) => {
-      formDataObj.append(key, value);
+      if (value !== undefined && value !== null) {
+        formDataObj.append(key, value);
+      }
     });
     try {
-     
-    
+      console.log(formData)
       const { data } = await toast.promise(
         axios.post(`${baseURL}/api/v1/author/submit-journal`, formDataObj, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
+          headers: {
+            'Content-Type': 'multipart/form-data',
            Authorization: localStorage.getItem('token'),
         },
       }),
@@ -259,7 +257,7 @@ const JournalSubmitForm = () => {
                 <div>
                   <label className="label" htmlFor="pdfFile" >Journal doc File <span className="text-danger">*</span>
                   </label>
-                  <input className="input" type="file" name="pdfFile" onChange={handleChange} accept=".doc,.docx" required />
+                  <input className="input" type="file" name="pdfFile" onChange={handleChange}  required />
                 </div>
 
                 <div> 
