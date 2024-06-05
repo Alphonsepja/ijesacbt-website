@@ -16,10 +16,10 @@ app.use(cors());
     app.use(cookieParser()) // iska use ham isiliye krte he ki jab ham client side pr store cookie pr server se read writew operation kr ske 
     
     //import routes
-    import authorRouter from './routes/author.routes.js'
-    import adminRouter from './routes/admin.routes.js'
-    import reviewersRoute from './routes/reviewers.routes.js';
-    import publicRoute from './routes/public.routes.js';
+    import authorRouter from './src/routes/author.routes.js'
+    import adminRouter from './src/routes/admin.routes.js'
+    import reviewersRoute from './src/routes/reviewers.routes.js';
+    import publicRoute from './src/routes/public.routes.js';
     app.get('/', (req, res) => {
         res.send('Hey this is my API running 🥳')
       })
