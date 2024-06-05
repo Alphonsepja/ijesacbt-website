@@ -20,6 +20,9 @@ app.use(cors());
     import adminRouter from './routes/admin.routes.js'
     import reviewersRoute from './routes/reviewers.routes.js';
     import publicRoute from './routes/public.routes.js';
+    app.get('/', (req, res) => {
+        res.send('Hey this is my API running 🥳')
+      })
     app.use("/api/v1/author",authorRouter);
     app.use("/api/v1/admin",adminRouter);
     app.use("/api/v1/reviewer",reviewersRoute);
