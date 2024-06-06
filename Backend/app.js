@@ -1,37 +1,46 @@
 import express, { urlencoded } from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-const app=express();
+import authorRouter from './src/routes/author.routes.js';
+import adminRouter from './src/routes/admin.routes.js';
+import reviewersRoute from './src/routes/reviewers.routes.js';
+import publicRoute from './src/routes/public.routes.js';
+
+const app = express();
+
+const allowedOrigins = ['https://ijesacbt-website.vercel.app', 'https://ijesacbt.com'];
 
 app.use(cors({
-  origin: ['https://ijesacbt-website.vercel.app', 'https://ijesacbt.com'], // Array of allowed origins
+  origin: allowedOrigins, // Array of allowed origins
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
 }));
-// app.use(cors({
-    //     origin: process.env.CORS_ORIGIN,
-    //     credentials: true
-    // }));
-    
-    app.use(express.json({limit:"16kb"})); // agar form ka data json formate me aata he to use is middleware se use kiya jata he phle body-parser bhi use kiya jaat tha 
-    app.use(urlencoded({extended:true,limit:"16kb"})); // jab url me data aata he to bo diffrent diffrent charecter leta he use shi formate me change krta he 
-    app.use(express.static("public")) // agar hame koi cheej server pr store krna he to yha uska path dena hota he ye middleware usi kam me aata he 
-    
-    app.use(cookieParser()) // iska use ham isiliye krte he ki jab ham client side pr store cookie pr server se read writew operation kr ske 
-    
-    //import routes
-    import authorRouter from './src/routes/author.routes.js'
-    import adminRouter from './src/routes/admin.routes.js'
-    import reviewersRoute from './src/routes/reviewers.routes.js';
-    import publicRoute from './src/routes/public.routes.js';
-    app.get('/', (req, res) => {
-        res.send('Hey this is my API running 🥳')
-      })
-    app.use("/api/v1/author",authorRouter);
-    app.use("/api/v1/admin",adminRouter);
-    app.use("/api/v1/reviewer",reviewersRoute);
-    app.use("/api/v1/public",publicRoute);
 
+app.use(express.json({ limit: "16kb" }));
+app.use(urlencoded({ extended: true, limit: "16kb" }));
+app.use(express.static("public"));
+app.use(cookieParser());
 
-export {app};
+// Error handling middleware to set CORS headers in case of 401 errors
+app.use((err, req, res, next) => {
+  if (err.status === 401) {
+    res.set('Access-Control-Allow-Origin', allowedOrigins.join(','));
+    res.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.set('Access-Control-Allow-Credentials', 'true');
+  }
+  next(err);
+});
+
+// Import routes
+app.get('/', (req, res) => {
+  res.send('Hey this is my API running 🥳');
+});
+
+app.use("/api/v1/author", authorRouter);
+app.use("/api/v1/admin", adminRouter);
+app.use("/api/v1/reviewer", reviewersRoute);
+app.use("/api/v1/public", publicRoute);
+
+export { app };
