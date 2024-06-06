@@ -149,6 +149,8 @@ const SetFeedBack = asyncHandler(async(req,res)=>{
         const { q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11,q12, feedback, journalId } = req.body;
         let user = req.user._id;
         let journalData = await Journal.findById({_id:journalId});
+        let reviewerName = req.user.name;
+        let authorData = await User.findById({_id:journalData.author});
         //console.log(journalData);
         if(!journalData){
             throw new ApiError(201, "Journal is not present ");
@@ -186,6 +188,75 @@ const SetFeedBack = asyncHandler(async(req,res)=>{
             journal: journalData._id // Assuming journalId is provided in the request body
         });
 
+        const htmlContent = `
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Thank You for Your Review</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 2px 2px 12px #aaa;
+        }
+        .header {
+            background-color: #f4f4f4;
+            padding: 10px 0;
+            text-align: center;
+            border-bottom: 1px solid #ccc;
+            margin-bottom: 20px;
+        }
+        .footer {
+            background-color: #f4f4f4;
+            padding: 10px 0;
+            text-align: center;
+            border-top: 1px solid #ccc;
+            margin-top: 20px;
+        }
+        a {
+            color: #3366cc;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>Thank You for Your Review</h2>
+        </div>
+        
+        <p>Dear Dr. ${reviewerName},</p>
+        
+        <p>Thank you for your review of this manuscript.</p>
+        
+        <p><strong>Manuscript Number:</strong> ${journalData.paper_id}<br>
+        <strong>Title:</strong> ${journalData.title}<br>
+        <strong>Author:</strong> ${authorData.name}<br>
+        <strong>Journal:</strong> International Journal of Engineering Science, Advanced Computing and Bio-Technology (IJESACBT)</p>
+        
+        <p>You can access your review comments and the decision letter (when available) by logging onto the Editorial Manager site at:</p>
+        
+        <p><a href="http://www.ijesacbt.com">www.ijesacbt.com</a></p>
+        
+        <p>With kind regards,</p>
+        
+        <p>Dr. R. Ponalagusamy<br>
+        Editor-in-Chief<br>
+        IJESACBT</p>
+        
+        
+    </div>
+</body>
+</html>
+`;
+
        if(!savedFeedback)
        {
         throw new ApiError(500, "Error while saving data into database ");
@@ -204,6 +275,7 @@ const SetFeedBack = asyncHandler(async(req,res)=>{
          filteredReviewer[0].status = 'feedbackGiven';
       }
        await journalData.save();
+       const mailRes = sendEmail(req.user.email,htmlContent,"Thank You for Your Review");
 
        res.status(200).json(
         new ApiResponse(200,"Feedback Set Successfully")
