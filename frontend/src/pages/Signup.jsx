@@ -47,15 +47,16 @@ const Signup = () => {
       formDataObj.append(key, value);
     });
     try {
-      const response = await toast.promise(
-        fetch(`${baseURL}/api/v1/author/register`, {
-          method: 'POST',
-          body: formDataObj,
-          headers: {
-            // Ensure proper content type for form data
-            "Content-Type": "multipart/form-data",
-          },
-        }),
+      const { data } = await toast.promise(
+        axios.post(
+          `${baseURL}/api/v1/author/register`,
+          formDataObj,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        ),
         {
           pending: "Register in progress...",
           success: "User Registered successfully",
@@ -63,14 +64,8 @@ const Signup = () => {
           loading: "Register in progress...",
         }
       );
-      
-      if (response.ok) {
-        // If the response status is within the 200-299 range, consider it successful
-        navigate("/login");
-        // Handle success, redirect, or show a success message
-      } else {
-        throw new Error(`Failed to register user. Status: ${response.status}`);
-      }
+      navigate("/login");
+      // Handle success, redirect, or show a success message
     } catch (error) {
       console.error("Error submitting form:", error);
       // Handle errors, show an error message, etc.
