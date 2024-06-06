@@ -8,6 +8,7 @@ import publicRoute from './src/routes/public.routes.js';
 
 const app = express();
 
+
 app.use(
   cors({
     origin: "*",
