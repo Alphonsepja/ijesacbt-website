@@ -11,7 +11,7 @@ const app = express();
 const allowedOrigins = ['https://ijesacbt-website.vercel.app', 'https://ijesacbt.com'];
 
 app.use(cors({
-  origin: allowedOrigins, // Array of allowed origins
+  origin: allowedOrigins,
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
@@ -22,14 +22,12 @@ app.use(urlencoded({ extended: true, limit: "16kb" }));
 app.use(express.static("public"));
 app.use(cookieParser());
 
-// Error handling middleware to set CORS headers in case of 401 errors
+// Error handling middleware to ensure CORS headers are set for all responses
 app.use((err, req, res, next) => {
-  if (err.status === 401) {
-    res.set('Access-Control-Allow-Origin', allowedOrigins.join(','));
-    res.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-    res.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    res.set('Access-Control-Allow-Credentials', 'true');
-  }
+  res.set('Access-Control-Allow-Origin', allowedOrigins.join(','));
+  res.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.set('Access-Control-Allow-Credentials', 'true');
   next(err);
 });
 
