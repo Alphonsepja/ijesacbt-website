@@ -66,14 +66,14 @@ const registerUser =asyncHandler(async(req,res)=>{
         }
 
         const degreeLocalPath =req.file.buffer;
-        //console.log(degreeLocalPath);
+        console.log(degreeLocalPath);
         
         if(!degreeLocalPath)
         {
             throw new ApiError(400,"degreeLocal file is required");
         }
         const degree= await uploadOnCloudinary(degreeLocalPath,"journal_degree");
-        
+        console.log(degree)
     
         if(!degree)
         {

@@ -14,11 +14,13 @@ const uploadOnCloudinary = async (fileBuffer, targetFolder) => {
     if (!fileBuffer) return null;
 
     // Convert the file buffer to a Base64-encoded string
-    const fileDataUrl = `data:image/jpeg;base64,${fileBuffer.toString("base64")}`;
+    const fileDataUrl = `data:application/pdf;base64,${fileBuffer.toString("base64")}`;
+
+    // console.log("11111",fileDataUrl)
 
     // Upload the file directly to Cloudinary
     const response = await cloudinary.uploader.upload(fileDataUrl, {
-      resource_type: "image", // Adjust the resource type as needed
+      resource_type: "auto", // Adjust the resource type as needed
       folder: targetFolder
     });
 
