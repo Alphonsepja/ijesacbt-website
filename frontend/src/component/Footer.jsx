@@ -26,12 +26,12 @@ const Footer = () => {
                 620015
               </p>
               <p>
-                <a className="footer-link" href="tel:415-201-6370">
-                  0431-250-4135
+                <a style={{textDecoration: "none",cursor: "pointer"}} className="footer-link">
+                  support@ijesacbt.com
                 </a>
                 <br />
-                <a className="footer-link" href="mailto:hello@omnifood.com">
-                  xyz@gmail.com
+                <a style={{textDecoration: "none", cursor: "pointer"}} className="footer-link">
+                ijesacbteditor@gmail.com
                 </a>
               </p>
             </address>
